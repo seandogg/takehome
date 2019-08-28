@@ -24,13 +24,36 @@
             max_height: 480
           %}
         </div>
-      {% elsif collection == empty %}
-        {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
-        {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
-      {% endif %}
 
-      {%- assign default_label = 'homepage.onboarding.collection_title' | t -%}
-      <p>{{ collection.title | default: default_label }}</p>
+        <div class="collection-list__content">
+
+          {%- unless block.settings.collection_links == blank -%}
+          <ul>
+            {%- for link in linklists[block.settings.collection_links].links -%}
+              <li>
+                <a href="{{ link.src }}" title="{{ link.title }}">
+                  <button class="primary">{{ link.title }}</button>
+                </a>
+              </li>
+            {%- endfor -%}
+          </ul>
+          {% endunless %}
+
+          {%- if block.settings.collection_button != blank -%}
+            <a href="{{ block.settings.collection_button_url }}">
+              <button class="primary">{{ block.settings.collection_button }}</button>
+            </a>
+          {%- endif -%}
+
+        {% elsif collection == empty %}
+          {% capture current %}{% cycle 1, 2, 3, 4, 5, 6 %}{% endcapture %}
+          {{ 'collection-' | append: current | placeholder_svg_tag: 'placeholder-svg placeholder-svg--small' }}
+        {% endif %}
+
+        {%- assign default_label = 'homepage.onboarding.collection_title' | t -%}
+        <h2>{{ collection.title | default: default_label }}</h2>
+        <p>{{ collection.description }}</p>
+      </div>
     </a>
   {% endfor %}
 
@@ -38,6 +61,7 @@
     {% include 'no-blocks' %}
   {% endif %}
 </section>
+
 
 {% schema %}
   {
@@ -60,6 +84,24 @@
             "label": "Collection",
             "id": "collection",
             "type": "collection"
+          },
+          {
+            "id": "collection_links",
+            "type": "link_list",
+            "label": "Tag linklist",
+            "info": "Optional"
+          },
+          {
+            "id": "collection_button",
+            "type": "text",
+            "label": "Button text",
+            "info": "Optional"
+          },
+          {
+            "id": "collection_button_url",
+            "type": "url",
+            "label": "Button URL",
+            "info": "Optional"
           }
         ]
       }
