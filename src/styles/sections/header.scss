@@ -19,7 +19,8 @@
   flex-wrap: nowrap;
   align-items: center;
   @include media-query($medium-down) {
-    justify-content: space-evenly;
+    padding: 0 15px;
+    justify-content: space-between;
   }
 
   // probably not a good thing to do here, but I'm cheating a bit here to help center the elements on mobile
