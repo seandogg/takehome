@@ -12,7 +12,7 @@
 {%- endcomment -%}
 <section data-section-id="{{ section.id }}" data-section-type="header">
   {%- if section.settings.announcement_bar_enabled -%}
-    <div>
+    <div class="announcement-bar">
       {%- if section.settings.announcement_bar_home_page_only == false or template.name == 'index' -%}
         {%- if section.settings.announcement_bar_link != blank -%}
           <a href="{{ section.settings.announcement_bar_link }}">
@@ -25,13 +25,16 @@
     </div>
   {%- endif -%}
 
-  <header role="banner">
+  <header role="banner" class="main-nav">
+    <div class="main-nav__burger">
+      {% include 'icon-burger' %}
+    </div>
     {% if template.name == 'index' %}
       <h1>
     {% else %}
       <div class="h1">
     {% endif %}
-        <a href="/" class="logo-image">
+        <a href="/">
           {% if section.settings.logo != blank %}
             {% capture image_size %}{{ section.settings.logo_max_width }}x{% endcapture %}
             <img src="{{ section.settings.logo | img_url: image_size }}"
@@ -47,14 +50,58 @@
       </div>
     {% endif %}
 
-    <a href="/cart">
-      {% include 'icon-cart' %}
-      {{ 'layout.cart.title' | t }}
-      ({{ cart.item_count }} {{ 'layout.cart.items_count' | t: count: cart.item_count }})
-    </a>
+    <nav role="navigation">
+      <ul class="main-nav__menu">
+        {% for link in linklists[section.settings.menu].links %}
+          {% if link.links != blank %}
+            <li>
+              <a href="{{ link.url }}" class="{% if link.title == 'Sale' %}main-nav__link--red{% else %}main-nav__link{% endif %}">
+                {{ link.title }}
+                {% include 'icon-arrow-down' %}
+              </a>
+              <ul>
+                {% for childlink in link.links %}
+                  <li>
+                    <a href="{{ childlink.url }}" class="main-nav__link" >
+                      {{ childlink.title }}
+                    </a>
+                  </li>
+                {% endfor %}
+              </ul>
+            </li>
+          {% else %}
+            <li>
+              <a href="{{ link.url }}" class="main-nav__link {% if link.title == 'Sale' %}main-nav__link--red{% endif %}">
+                {{ link.title }}
+              </a>
+            </li>
+          {% endif %}
+        {% endfor %}
+      </ul>
+    </nav>
+
+
+    <form action="/search" method="get" role="search" class="main-nav__search">
+      <label for="Search-{{ section.id }}" class="label-hidden">
+        {{ 'general.search.placeholder' | t }}
+      </label>
+
+      <input type="search"
+             name="q"
+             id="Search-{{ section.id }}"
+             value="{{ search.terms | escape }}"
+             placeholder="{{ 'general.search.placeholder' | t }}">
+
+      <button type="submit" class="button">
+        {% include 'icon-search' %}
+        <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
+      </button>
+    </form>
 
     {% if shop.customer_accounts_enabled %}
-      <ul>
+
+      <ul class="main-nav__account">
+        <h5>My Account</h5>
         {% if customer %}
           <li>
             {% if customer.first_name != blank %}
@@ -69,62 +116,18 @@
           </li>
         {% else %}
           <li>
-            {{ 'layout.customer.log_in' | t | customer_login_link }}
-          </li>
-          <li>
-            {{ 'layout.customer.create_account' | t | customer_register_link }}
+            {{ 'layout.customer.log_in' | t | customer_login_link }} or {{ 'layout.customer.create_account' | t | customer_register_link }}
           </li>
         {% endif %}
       </ul>
     {% endif %}
 
-    <form action="/search" method="get" role="search">
-      <label for="Search-{{ section.id }}" class="label-hidden">
-        {{ 'general.search.placeholder' | t }}
-      </label>
+    <a href="/cart" class="main-nav__cart">
+      {% include 'icon-cart' %}
+      <span class="cart-count">{{ cart.item_count }}</span>
+    </a>
 
-      <input type="search"
-        name="q"
-        id="Search-{{ section.id }}"
-        value="{{ search.terms | escape }}"
-        placeholder="{{ 'general.search.placeholder' | t }}">
-
-      <button type="submit" class="button">
-        {% include 'icon-search' %}
-        <span class="icon-fallback-text">{{ 'general.search.submit' | t }}</span>
-      </button>
-    </form>
   </header>
-
-  <nav role="navigation">
-    <ul>
-      {% for link in linklists[section.settings.menu].links %}
-        {% if link.links != blank %}
-          <li>
-            <a href="{{ link.url }}">
-              {{ link.title }}
-              {% include 'icon-arrow-down' %}
-            </a>
-            <ul>
-              {% for childlink in link.links %}
-                <li>
-                  <a href="{{ childlink.url }}">
-                    {{ childlink.title }}
-                  </a>
-                </li>
-              {% endfor %}
-            </ul>
-          </li>
-        {% else %}
-          <li>
-            <a href="{{ link.url }}">
-              {{ link.title }}
-            </a>
-          </li>
-        {% endif %}
-      {% endfor %}
-    </ul>
-  </nav>
 </section>
 
 {% if section.settings.logo != blank %}
