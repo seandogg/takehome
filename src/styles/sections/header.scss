@@ -23,8 +23,6 @@
     justify-content: space-between;
   }
 
-  // probably not a good thing to do here, but I'm cheating a bit here to help center the elements on mobile
-  // in a production env... this would prob not be cool or accessible, would certainly approach it differently ;)
   nav {
     @include media-query($medium-down) {
       display: none;
@@ -70,24 +68,35 @@
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 15px;
-    @include media-query($medium-down) {
+    @include media-query($small) {
       display: none;
     }
 
-    input[type="search"] {
+    .main-nav__search-input {
       border: none;
       border-radius: 20px;
       padding: 6px;
       color: #A3A3A3;
+      @include media-query($small) {
+        display: none;
+      }
 
       &::placeholder {
         color: #A3A3A3;
-        font-weight: bold;
+        font-weight: 600;
       }
+    }
+
+    input[type="search"] {
+      border: none;
     }
 
     .icon {
       fill: #767676;
+    }
+
+    .button {
+      background: transparent;
     }
   }
 
@@ -98,7 +107,7 @@
     align-items: center;
     justify-content: center;
     padding: 0;
-    @include media-query($medium-down) {
+    @include media-query($small) {
       display: none;
     }
 

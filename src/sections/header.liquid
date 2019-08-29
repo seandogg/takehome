@@ -90,7 +90,8 @@
              name="q"
              id="Search-{{ section.id }}"
              value="{{ search.terms | escape }}"
-             placeholder="{{ 'general.search.placeholder' | t }}">
+             placeholder="{{ 'general.search.placeholder' | t }}"
+             class="main-nav__search-input">
 
       <button type="submit" class="button">
         {% include 'icon-search' %}
