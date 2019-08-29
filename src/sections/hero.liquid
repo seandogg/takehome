@@ -1,41 +1,50 @@
-<div class="hero__slide">
 
   {% if section.blocks.size == 0 %}
     {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-
   {% else %}
 
-    {% for block in section.blocks %}
-      {% if block.settings.hero_img == blank %}
-        {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-      {% else %}
-        {% include 'responsive-image' with
-            image: block.settings.hero_img,
-            max_width: 1600,
-            max_height: 700 %}
-        {% if block.settings.hero_heading != blank or block.settings.hero_linklist != blank %}
-          <div class="hero__content">
-            {% unless block.settings.hero_heading == blank %}
-              <h1>{{ block.settings.hero_heading }}</h1>
-            {% endunless %}
-            <h2>{{ block.settings.hero_linklist }}</h2>
-              <ul>
-                {% for link in linklists[block.settings.hero_linklist].links %}
-                  <li>
-                    <a href="{{ link.src }}" title="{{ link.title }}">
-                      <button class="primary">{{ link.title }}</button>
-                    </a>
-                  </li>
-                {% endfor %}
-              </ul>
+    <div class="hero__slider-controls">
+      <div class="prev-button">{% include 'icon-left' %}</div>
+      <div class="next-button">{% include 'icon-right' %}</div>
+    </div>
+
+    <div class="hero__slider">
+
+      {% for block in section.blocks %}
+
+        {% if block.settings.hero_img == blank %}
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        {% else %}
+
+          <div class="hero__slide">
+
+            {{ block.settings.hero_img | img_url: 'master' | img_tag }}
+
+            {% if block.settings.hero_heading != blank or block.settings.hero_linklist != blank %}
+              <div class="hero__content">
+                {% unless block.settings.hero_heading_intro == blank %}
+                  <h4>{{ block.settings.hero_heading_intro }}</h4>
+                {% endunless %}
+                {% unless block.settings.hero_heading == blank %}
+                  <h1>{{ block.settings.hero_heading }}</h1>
+                {% endunless %}
+                  <ul class="hero__content-buttons">
+                    {% for link in linklists[block.settings.hero_linklist].links %}
+                      <li>
+                        <a href="{{ link.src }}" title="{{ link.title }}">
+                          <button class="primary">{{ link.title }}</button>
+                        </a>
+                      </li>
+                    {% endfor %}
+                  </ul>
+              </div>
+            {% endif %}
+
           </div>
         {% endif %}
-      {% endif %}
-    {% endfor %}
-
+      {% endfor %}
+    </div>
   {% endif %}
-
-</div>
 
 {% schema %}
   {
@@ -50,6 +59,12 @@
           "id": "hero_img",
           "type": "image_picker",
           "label": "Hero Image"
+        },
+        {
+          "id": "hero_heading_intro",
+          "type": "text",
+          "label": "Intro text",
+          "default": "In stores & online"
         },
         {
           "id": "hero_heading",

@@ -35,7 +35,11 @@
 @import './sections/featured-collection';
 @import './sections/image-with-text';
 @import './sections/header';
+@import './sections/hero';
 
 // Templates
 @import './templates/gift_card';
 @import './templates/product';
+
+// static
+@import './static/tiny-slider';

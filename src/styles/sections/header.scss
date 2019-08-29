@@ -34,9 +34,20 @@
     justify-content: space-between;
     list-style: none;
     padding: 0;
-    margin: 0 40px;
+    margin: 0;
+    min-width: 345px;
     @include media-query($medium-down) {
       display: none;
+    }
+
+    li {
+      @include media-query($widescreen) {
+        padding: 0 15px;
+      }
+
+      @include media-query($large-down) {
+        padding: 0;
+      }
     }
   }
 
