@@ -1,9 +1,9 @@
 # Notes / Process
 
 ## Scoping
-During the scoping/estimation phase, I eye the design from top to bottom, creating a "class tree" for the page. Here I'm also noting any tools or approaches that come to mind. This also helps me name classes consistenly down the line.
+During the scoping/estimation phase, I eye the design from top to bottom, creating a "class tree" for the page. Here I'm also noting any tools or approaches that come to mind (here I noted [tiny-slider](https://github.com/ganlanyuan/tiny-slider) which I wanted to use for the main carousel). This also helps me name classes later in the project when I'm painting my class tree in HTML/liquid. 
 
-For this design my class tree looks like this:
+For this design, my class tree looks like this:
 
 ```
 page
