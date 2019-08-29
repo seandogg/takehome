@@ -5,29 +5,32 @@ During the scoping/estimation phase, I eye the design from top to bottom, creati
 
 For this design my class tree looks like this:
 
-.announcement-bar
-
-.main-nav
-  .main-nav__burger
-  .main-nav__logo
-  .main-nav__menu
-  .main-nav__search
-  .main-nav__account
-  .main-nav__cart
-
-.hero
-  .hero__slide
-  .hero__slide-content
-  
-.image-with-text
-  .image-with-text__content
-
-
-.collection-list
-  .collection-list__content
-
-.icon-section
-  .icon-section__icon 
+```
+page
+    .announcement-bar
+    
+    .main-nav
+      .main-nav__burger
+      .main-nav__logo
+      .main-nav__menu
+      .main-nav__search
+      .main-nav__account
+      .main-nav__cart
+    
+    .hero
+      .hero__slide
+      .hero__slide-content
+      
+    .image-with-text
+      .image-with-text__content
+    
+    
+    .collection-list
+      .collection-list__content
+    
+    .icon-section
+      .icon-section__icon 
+```
 
 ## Building out the data
 Next, I like to generate some data. For now, I'll use [Shopify's Developer Tools](https://help.shopify.com/en/api/tools/developer-tools) to quickly generate some placeholder products. 
